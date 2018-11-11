@@ -21,4 +21,4 @@ Open books are not scored, but individual cards are.  Card points are as follows
 2(wild) = 20pts\
 Joker(wild) = 50pts\
 BLACK 3 (spade or club) = 300pts  These will always be negative as books cannot be made from 3s.\
-RED 3 (diamond or heart) = 500pts  These will always be negative as books cannot be made from 3s.\
+RED 3 (diamond or heart) = 500pts  These will always be negative as books cannot be made from 3s.
