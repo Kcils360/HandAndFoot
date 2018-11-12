@@ -8,5 +8,9 @@ namespace HandAndFoot.Data
 {
     public class HandAndFootDbContext : DbContext
     {
+        public HandAndFootDbContext(DbContextOptions<HandAndFootDbContext> options) : base(options)
+        {
+
+        }
     }
 }
