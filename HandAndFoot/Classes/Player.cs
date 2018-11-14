@@ -11,6 +11,7 @@ namespace HandAndFoot.Classes
         // Hand List<book>
         // Foot List<book>
         // Table List<book>
+        // GameID - When game is created, an ID is assigned.  This will allow players to access the game session.
         // Extras
         // Current Hand will display Hand until empty then foot
         // Name
@@ -18,11 +19,15 @@ namespace HandAndFoot.Classes
         // books 3,4,5,6,7,8,9,10,J,Q,K,A, W
         // when books in hand have 3 cards, move to table
         // when books on table have 7, close and total points
+        public string Name { get; set; }
         public Hand Hand { get; set; }
         public Hand Foot { get; set; }
         public List<Book> LayOnTable { get; set; }
-        public Player(List<Card> hand, List<Card> foot)
+        public int PlayerID { get; set; }
+        public int GameID { get; set; }
+        public Player(List<Card> hand, List<Card> foot, string name)
         {
+            Name = name;
             Hand = new Hand(hand);
             Foot = new Hand(foot);
         }

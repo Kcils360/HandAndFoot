@@ -11,6 +11,8 @@ namespace HandAndFoot.Classes
 
         public GameDeck GameDeck { get; set; }
         public DiscardPile DiscardPile { get; set; }
+        public List<Player> Players { get; set; }
+        public int GameID { get; set; }
         public GameTable(GameDeck gd, DiscardPile dp)
         {
             GameDeck = gd;
@@ -18,6 +20,22 @@ namespace HandAndFoot.Classes
         }
 
         //Gameplay Methods
+        public string MakeNewGameId()
+        {
+            //var letters = new Alphabet();
+            var letters = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "N", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")" };
+
+            var random = new Random();
+            string GameId = "";
+
+            for (int j = 0; j < 10; j++)
+            {
+                var randomIndex = random.Next(0, letters.Length);
+                GameId += letters[randomIndex];
+            }
+            return GameId;
+        }
+
         public void ShowDiscard()
         {
             Console.WriteLine("Top Card in Discard");

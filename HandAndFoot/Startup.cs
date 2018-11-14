@@ -17,7 +17,7 @@ namespace HandAndFoot
         public IConfiguration Configuration { get; set; }
         public Startup(IConfiguration configuration)
         {
-            configuration = Configuration;
+            Configuration = configuration;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
