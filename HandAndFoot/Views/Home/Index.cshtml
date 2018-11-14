@@ -1,11 +1,12 @@
-﻿
+﻿@model HandAndFoot.Models.PlayerViewModel
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Index</h2>
-<form>
-    <input />@*Take in user name*@
-    <button>submit to create player action</button>
+<form  method="post" asp-controller="Home" asp-action="Player">
+    <input asp-for=_user />@*Take in user name*@
+    <button type="submit"  >submit to create player action</button>
 </form>

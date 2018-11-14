@@ -7,6 +7,10 @@ namespace HandAndFoot.Classes
 {
     public class Player
     {
+        public Player()
+        {
+
+        }
         //player will have:
         // Hand List<book>
         // Foot List<book>
@@ -24,7 +28,7 @@ namespace HandAndFoot.Classes
         public Hand Foot { get; set; }
         public List<Book> LayOnTable { get; set; }
         public int PlayerID { get; set; }
-        public int GameID { get; set; }
+        public string GameID { get; set; }
         public Player(List<Card> hand, List<Card> foot, string name)
         {
             Name = name;

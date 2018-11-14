@@ -1,0 +1,15 @@
+﻿@model HandAndFoot.Classes.GameTable;
+@{
+    ViewData["Title"] = "PlayGame";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>PlayGame</h1>
+
+<h2>Game ID</h2>
+<p>@Model.GameID</p>
+<h2>Players</h2>
+@foreach(var p in Model.Players)
+{
+    <p>@p.Name</p>
+}
