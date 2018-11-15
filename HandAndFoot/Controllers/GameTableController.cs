@@ -14,17 +14,22 @@ namespace HandAndFoot.Controllers
             return View(player);
         }
 
-        public IActionResult CreateGame(Player player)
+        public IActionResult CreateGame(string _user)
         {
             //create a new GameTable
             GameTable gameTable = new GameTable(new GameDeck(), new DiscardPile(new List<Card>()));
-            var GID = gameTable.MakeNewGameId();
+            gameTable.Players = new List<Player>();
+            var player = new Player();
+            gameTable.GameID = gameTable.MakeNewGameId();
             //set the new gameID to the player.gameID
-            player.GameID = GID;
+            player.Name = _user;
+            player.GameID = gameTable.GameID;
+            player.Hand = new Hand(new List<Card>());
+            player.Foot = new Hand(new List<Card>());
             //add the user as Player to gametable
             gameTable.Players.Add(player);
 
-            return RedirectToAction("PlayGame");
+            return RedirectToAction("PlayGame",new { arg = gameTable });
         }
 
         public IActionResult AccessGame(Player player)
@@ -34,7 +39,7 @@ namespace HandAndFoot.Controllers
             return View();
         }
         //Bring in a gameTable, display GameTable, check for number of players, run game
-        public IActionResult PlayGame(GameTable gameTable )
+        public IActionResult PlayGame(GameTable gameTable)
         {
             return View(gameTable);
         }

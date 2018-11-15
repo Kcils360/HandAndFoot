@@ -7,12 +7,16 @@ namespace HandAndFoot.Classes
 {
     public class GameTable
     {
+        public GameTable()
+        {
+
+        }
         // Will be displayed on every turn, shows all Tables from each player and the top of the discard pile
 
         public GameDeck GameDeck { get; set; }
         public DiscardPile DiscardPile { get; set; }
         public List<Player> Players { get; set; }
-        public int GameID { get; set; }
+        public string GameID { get; set; }
         public GameTable(GameDeck gd, DiscardPile dp)
         {
             GameDeck = gd;
