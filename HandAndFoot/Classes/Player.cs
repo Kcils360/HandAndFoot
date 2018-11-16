@@ -23,11 +23,11 @@ namespace HandAndFoot.Classes
         // books 3,4,5,6,7,8,9,10,J,Q,K,A, W
         // when books in hand have 3 cards, move to table
         // when books on table have 7, close and total points
+        public int ID { get; set; }
         public string Name { get; set; }
         public Hand Hand { get; set; }
         public Hand Foot { get; set; }
         public List<Book> LayOnTable { get; set; }
-        public int PlayerID { get; set; }
         public string GameID { get; set; }
         public Player(List<Card> hand, List<Card> foot, string name)
         {
