@@ -12,5 +12,15 @@ namespace HandAndFoot.Classes
         {
             BookOfCards = book;
         }
+
+        public string SerialzeBook()
+        {
+            string book = "";
+            foreach (var b in BookOfCards)
+            {
+                book = book + b.SerializeCard() + " ";
+            }
+            return book;
+        }
     }
 }

@@ -6,11 +6,12 @@ using HandAndFoot.Classes;
 using Microsoft.AspNetCore.Mvc;
 using HandAndFoot.Data;
 using System.IO;
+using Microsoft.EntityFrameworkCore;
 
 namespace HandAndFoot.Controllers
 {
     public class GameTableController : Controller
-    {
+    {        
         private readonly HandAndFootDbContext _context;
         public GameTable gameTable = new GameTable(new GameDeck(), new DiscardPile(new List<Card>()));
         public GameTableController(HandAndFootDbContext context)
@@ -31,15 +32,22 @@ namespace HandAndFoot.Controllers
                 gameTable.Players = new List<Player>();
                 var player = new Player();
                 gameTable.GameID = gameTable.MakeNewGameId();
+                string GT = gameTable.GameDeck.SerializeDeck();
                 //set the new gameID to the player.gameID
                 player.Name = _user;
                 player.GameID = gameTable.GameID;
                 player.Hand = new Hand(new List<Card>());
                 player.Foot = new Hand(new List<Card>());
+                player.LayOnTable = new List<Book>();
+                string plaYA = player.SerializePlayer();
+                //send the gameTable data to the db
+
+
                 //add the user as Player to gametable
                 gameTable.Players.Add(player);
             }
             MakeNewGameTable();
+            
 
             return RedirectToAction("PlayGame");
         }
