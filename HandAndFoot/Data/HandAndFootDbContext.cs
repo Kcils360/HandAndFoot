@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HandAndFoot.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,8 @@ namespace HandAndFoot.Data
         {
 
         }
+
+        public DbSet<GameTable> GameTables { get; set; }
+        public DbSet<Player> Players { get; set; }
     }
 }
