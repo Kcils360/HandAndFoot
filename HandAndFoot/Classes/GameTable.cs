@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -90,6 +91,14 @@ namespace HandAndFoot.Classes
                 Result.Add(c);
             }
             p.Hand.Cards = Result;
+        }
+
+        public string SerializeGameTable()
+        {
+            GameDeck.SerializeDeck();
+            DiscardPile.SerializeDiscard();
+            string gameId = JsonConvert.SerializeObject(GameID);
+            return "";
         }
     }
 }

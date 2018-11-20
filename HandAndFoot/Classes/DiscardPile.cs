@@ -12,5 +12,15 @@ namespace HandAndFoot.Classes
         {
             Discards = discards;
         }
+
+        public string SerializeDiscard()
+        {
+            string discard = "";
+            foreach (var c in Discards)
+            {
+                discard = discard + c.SerializeCard();
+            }
+            return "";
+        }
     }
 }

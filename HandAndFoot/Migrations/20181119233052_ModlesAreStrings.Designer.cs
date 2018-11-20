@@ -3,14 +3,16 @@ using HandAndFoot.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HandAndFoot.Migrations
 {
     [DbContext(typeof(HandAndFootDbContext))]
-    partial class HandAndFootDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181119233052_ModlesAreStrings")]
+    partial class ModlesAreStrings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

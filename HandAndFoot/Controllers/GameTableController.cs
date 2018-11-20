@@ -22,7 +22,7 @@ namespace HandAndFoot.Controllers
         {
             return View(player);
         }
-
+        [HttpPost]
         public IActionResult CreateGame(string _user)
         {
             void MakeNewGameTable()
@@ -30,9 +30,10 @@ namespace HandAndFoot.Controllers
                 //create a new GameTable
                 //GameTable gameTable = new GameTable(new GameDeck(), new DiscardPile(new List<Card>()));
                 gameTable.Players = new List<Player>();
-                var player = new Player();
                 gameTable.GameID = gameTable.MakeNewGameId();
                 string GT = gameTable.GameDeck.SerializeDeck();
+                //create new player and add player data
+                var player = new Player();
                 //set the new gameID to the player.gameID
                 player.Name = _user;
                 player.GameID = gameTable.GameID;
@@ -41,7 +42,7 @@ namespace HandAndFoot.Controllers
                 player.LayOnTable = new List<Book>();
                 string plaYA = player.SerializePlayer();
                 //send the gameTable data to the db
-
+                
 
                 //add the user as Player to gametable
                 gameTable.Players.Add(player);
