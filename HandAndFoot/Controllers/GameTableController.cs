@@ -18,9 +18,10 @@ namespace HandAndFoot.Controllers
         {
             _context = context;
         }
-        public IActionResult Index(Player player)
+        public IActionResult Index(string _user)
         {
-            return View(player);
+            string user = _user;
+            return View();
         }
         [HttpPost]
         public IActionResult CreateGame(string _user)
