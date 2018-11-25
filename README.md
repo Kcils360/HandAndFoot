@@ -1,7 +1,7 @@
 # HandAndFoot
 I wanted to make an online version of the popular card game, Hand and Foot.
 
-## Rules of the Game :hearts :clubs :spades :diamonds
+## Rules of the Game :hearts: :clubs: :spades: :diamonds:
 For 3 or more players\
 A full game consists of 4 rounds, determined by the "melt" which will be described later.\
 -Players will be delt 2 stacks of cards each, a "hand" and a "foot." You must play or discard all cards in your hand before playing your foot.  Play consists of drawing cards, making books, and discarding. \
