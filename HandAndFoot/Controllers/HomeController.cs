@@ -25,7 +25,11 @@ namespace HandAndFoot.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Player(string _user)
-        {            
+        {       
+            //TODO
+            //add a check db for name already exists
+            //if exists grab ID and move on
+            //else create player
             var Player = new Classes.Player();
             Player.Hand = new Hand(new List<Card>());
             Player.Foot = new Hand(new List<Card>());
@@ -39,7 +43,7 @@ namespace HandAndFoot.Controllers
             _context.Players.Add(plaYA);
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "GameTable", _user);//create game or join game page, send the player object
+            return RedirectToAction("Index", "GameTable", new { _user } );//create game or join game page, send the player object
         }
 
         //---------------Helper Methods----------------------

@@ -20,7 +20,7 @@ namespace HandAndFoot.Controllers
         }
         public IActionResult Index(string _user)
         {
-            string user = _user;
+            TempData["userName"] = _user;
             return View();
         }
         [HttpPost]
@@ -33,20 +33,12 @@ namespace HandAndFoot.Controllers
                 gameTable.Players = new List<Player>();
                 gameTable.GameID = gameTable.MakeNewGameId();
                 string GT = gameTable.GameDeck.SerializeDeck();
-                //create new player and add player data
-                var player = new Player();
-                //set the new gameID to the player.gameID
-                player.Name = _user;
-                player.GameID = gameTable.GameID;
-                player.Hand = new Hand(new List<Card>());
-                player.Foot = new Hand(new List<Card>());
-                player.LayOnTable = new List<Book>();
-                string plaYA = player.SerializePlayer();
+                
                 //send the gameTable data to the db
                 
 
                 //add the user as Player to gametable
-                gameTable.Players.Add(player);
+                //gameTable.Players.Add(player);
             }
             MakeNewGameTable();
             
