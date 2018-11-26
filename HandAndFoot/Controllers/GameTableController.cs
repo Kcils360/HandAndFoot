@@ -11,9 +11,8 @@ using Microsoft.EntityFrameworkCore;
 namespace HandAndFoot.Controllers
 {
     public class GameTableController : Controller
-    {        
+    {
         private readonly HandAndFootDbContext _context;
-        public GameTable gameTable = new GameTable(new GameDeck(), new DiscardPile(new List<Card>()));
         public GameTableController(HandAndFootDbContext context)
         {
             _context = context;
@@ -29,19 +28,35 @@ namespace HandAndFoot.Controllers
             void MakeNewGameTable()
             {
                 //create a new GameTable
-                //GameTable gameTable = new GameTable(new GameDeck(), new DiscardPile(new List<Card>()));
-                gameTable.Players = new List<Player>();
+                var gameTable = new Classes.GameTable
+                {
+                    Players = new List<Player>(),
+                    DiscardPile = new DiscardPile(new List<Card>()),
+                    GameDeck = new GameDeck()
+                };
                 gameTable.GameID = gameTable.MakeNewGameId();
-                string GT = gameTable.GameDeck.SerializeDeck();
+                //make a new Class.Player to handle to Model.Player info
+                Player player = new Player
+                {
+                    Name = _user,
+                    Hand = new Hand(new List<Card>()),
+                    Foot = new Hand(new List<Card>()),
+                    GameID = gameTable.GameID,
+                    LayOnTable = new List<Book>()
+                };
+                string GTdeck = gameTable.GameDeck.SerializeDeck();
+                var User = _context.Players.Where(p => p.Name == _user).Select(u => u).FirstOrDefault();
                 
+
+
                 //send the gameTable data to the db
-                
+
 
                 //add the user as Player to gametable
                 //gameTable.Players.Add(player);
             }
             MakeNewGameTable();
-            
+
 
             return RedirectToAction("PlayGame");
         }
@@ -60,7 +75,6 @@ namespace HandAndFoot.Controllers
         //Bring in a gameTable, display GameTable, check for number of players, run game
         public IActionResult PlayGame(GameTable G)
         {
-            G = gameTable;
             return View(G);
         }
     }
