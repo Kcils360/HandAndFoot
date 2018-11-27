@@ -93,12 +93,5 @@ namespace HandAndFoot.Classes
             p.Hand.Cards = Result;
         }
 
-        public string SerializeGameTable()
-        {
-            GameDeck.SerializeDeck();
-            DiscardPile.SerializeDiscard();
-            string gameId = JsonConvert.SerializeObject(GameID);
-            return "";
-        }
     }
 }

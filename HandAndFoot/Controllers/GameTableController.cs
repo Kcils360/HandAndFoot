@@ -19,7 +19,9 @@ namespace HandAndFoot.Controllers
         }
         public IActionResult Index(string _user)
         {
-            TempData["userName"] = _user;
+            int uId = Convert.ToInt32(_user);
+            var user = _context.Players.Where(u => u.ID == uId).Select(n => n.Name).FirstOrDefault();
+            TempData["userName"] = user;
             return View();
         }
         [HttpPost]
@@ -44,7 +46,7 @@ namespace HandAndFoot.Controllers
                     GameID = gameTable.GameID,
                     LayOnTable = new List<Book>()
                 };
-                string GTdeck = gameTable.GameDeck.SerializeDeck();
+                //string GTdeck = gameTable.GameDeck.SerializeDeck();
                 var User = _context.Players.Where(p => p.Name == _user).Select(u => u).FirstOrDefault();
                 
 

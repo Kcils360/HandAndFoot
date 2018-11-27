@@ -11,16 +11,6 @@ namespace HandAndFoot.Classes
         public Hand(List<Card> cards)
         {
             Cards = cards;
-        }
-
-        public string SerializeHand()
-        {
-            string hand = "";
-            foreach(var c in Cards)
-            {
-                hand = hand + c.SerializeCard();
-            }
-            return "";
-        }
+        }        
     }
 }

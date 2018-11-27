@@ -19,13 +19,6 @@ namespace HandAndFoot.Classes
             PointValue = p;
         }
 
-        public string SerializeCard()
-        {
-            string name = JsonConvert.SerializeObject(Name);
-            string suit = JsonConvert.SerializeObject(Suit);
-            string points = JsonConvert.SerializeObject(PointValue);
-            string card ="["+ name + suit + points +"]";
-            return card;
-        }
+        
     }
 }

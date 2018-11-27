@@ -45,22 +45,6 @@ namespace HandAndFoot.Classes
                 B.BookOfCards.Add(card);
             }
             LayOnTable.Add(B);
-        }
-
-        public string SerializePlayer()
-        {
-            string name = JsonConvert.SerializeObject(Name);
-            string hand = Hand.SerializeHand();
-            string foot = Foot.SerializeHand();
-            string gameId = JsonConvert.SerializeObject(GameID);
-            string book = "";
-            foreach (var b in LayOnTable)
-            {
-                book = book + b.SerialzeBook() + " ";
-            }
-            string player = "[" + name + hand + foot + gameId + book + "]";
-
-            return player;
-        }
+        }        
     }
 }

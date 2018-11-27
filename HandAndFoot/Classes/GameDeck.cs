@@ -63,15 +63,6 @@ namespace HandAndFoot.Classes
             return set;
         }
 
-        public string SerializeDeck()
-        {
-            string deck = "";
-            foreach(var c in Cards)
-            {
-                deck = deck + c.SerializeCard() + " ";
-            }
-            
-            return deck;
-        }
+        
     }
 }
