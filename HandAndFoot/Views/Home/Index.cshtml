@@ -9,7 +9,7 @@
 <form  method="post" >
     <h3>Enter a User Name</h3>
     <input asp-for=_user />@*Take in user name*@
-    <h3>Would you like to...?</h3>
-    <button type="submit" asp-controller="Home" asp-action="Player" asp-route-data="@Model">Create Game</button>
-    <button type="submit">Join a Game</button>
+    @*<h3>Would you like to...?</h3>*@
+    <button type="submit" asp-controller="Home" asp-action="Player" asp-route-data="@Model">Next</button>
+    @*<button type="submit">Join a Game</button>*@
 </form>

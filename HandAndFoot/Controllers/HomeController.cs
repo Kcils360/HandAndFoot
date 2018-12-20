@@ -24,10 +24,11 @@ namespace HandAndFoot.Controllers
         {
             //TODO
             //add a check db for name already exists
-            if (_context.Players.Select(n => n.Name.Contains(_user)).FirstOrDefault())
+            var t = _context.Players.Where(n => n.Name.Contains(_user)).Select(u => u.ID).FirstOrDefault().ToString();
+            if ( t != "0" )
             {
                 //if exists grab ID and move on
-                _user = (_context.Players.Where(n => n.Name.Contains(_user)).Select(u => u.ID).FirstOrDefault().ToString());
+                _user = t;
             }
             else
             {

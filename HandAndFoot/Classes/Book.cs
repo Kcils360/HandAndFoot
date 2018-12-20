@@ -11,6 +11,9 @@ namespace HandAndFoot.Classes
         public Book(List<Card> book)
         {
             BookOfCards = book;
-        }        
+        }
+
+
+        char[] array2 = new char[6]; 
     }
 }

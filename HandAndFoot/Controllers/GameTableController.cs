@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using HandAndFoot.Data;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace HandAndFoot.Controllers
 {
@@ -24,43 +25,45 @@ namespace HandAndFoot.Controllers
             TempData["userName"] = user;
             return View();
         }
+        
         [HttpPost]
         public IActionResult CreateGame(string _user)
         {
-            void MakeNewGameTable()
-            {
-                //create a new GameTable
-                var gameTable = new Classes.GameTable
-                {
-                    Players = new List<Player>(),
-                    DiscardPile = new DiscardPile(new List<Card>()),
-                    GameDeck = new GameDeck()
-                };
-                gameTable.GameID = gameTable.MakeNewGameId();
-                //make a new Class.Player to handle to Model.Player info
-                Player player = new Player
-                {
-                    Name = _user,
-                    Hand = new Hand(new List<Card>()),
-                    Foot = new Hand(new List<Card>()),
-                    GameID = gameTable.GameID,
-                    LayOnTable = new List<Book>()
-                };
-                //string GTdeck = gameTable.GameDeck.SerializeDeck();
-                var User = _context.Players.Where(p => p.Name == _user).Select(u => u).FirstOrDefault();
-                
-
-
-                //send the gameTable data to the db
-
-
-                //add the user as Player to gametable
-                //gameTable.Players.Add(player);
-            }
+            int uId = Convert.ToInt32(_user);
+            string GameID = "";
             MakeNewGameTable();
 
 
-            return RedirectToAction("PlayGame");
+            void MakeNewGameTable()
+            {
+                //create a new serializer
+                Serializer ser = new Serializer();
+                //create a new GameTable and gameId
+                var gameTable = new Classes.GameTable();
+                gameTable.GameID = gameTable.MakeNewGameId();
+
+
+                var MgameTable = new Models.GameTable()
+                {
+                    DiscardPile = ser.SerializeDiscard(new DiscardPile(new List<Card>())),
+                    GameDeck = ser.SerializeDeck(new GameDeck()),
+                    GameTableID = gameTable.GameID,
+                    PlayersList = ""
+                };
+                
+                //add the user as Player to gametable
+                var User = _context.Players.Where(p => p.ID == uId).Select(u => u).FirstOrDefault().ToString();
+                MgameTable.PlayersList = User;
+
+
+                //send the gameTable data to the db
+                _context.GameTables.Add(MgameTable);
+                _context.SaveChanges();
+                GameID = MgameTable.GameTableID;
+            }
+
+            return View("PlayGame");
+            //return RedirectToAction("PlayGame", new { GameID });
         }
 
         public IActionResult AccessGame(string _user, string _gameID)
@@ -72,12 +75,18 @@ namespace HandAndFoot.Controllers
             player.Foot = new Hand(new List<Card>());
             //check for a gameID in player, connect to game
             // if player.gameID is NULL, return error
-            return View();
+            return View("PlayGame");
         }
         //Bring in a gameTable, display GameTable, check for number of players, run game
-        public IActionResult PlayGame(GameTable G)
+        public IActionResult PlayGame(string GameID)
         {
-            return View(G);
+            var Game = _context.GameTables.Where(g => g.GameTableID == GameID).Select(t => t).FirstOrDefault();
+            //make a new class GameTable
+            GameTable gameTable = new GameTable();
+            gameTable.GameDeck = JsonConvert.DeserializeObject<GameDeck>(Game.GameDeck);
+            gameTable.DiscardPile = JsonConvert.DeserializeObject<DiscardPile>(Game.DiscardPile);
+
+            return View("PlayGame");
         }
     }
 }
