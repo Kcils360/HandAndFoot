@@ -3,13 +3,16 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string uNme = TempData["userName"].ToString();
 }
 
 <h2>Game Table Index</h2>
 
 <h2>Hello @TempData["userName"], </h2>
 <h1>Would you like to...?</h1>
-
-<button type="submit" asp-controller="GameTable" asp-action="CreateGame" >Create Game</button>
+<form asp-controller="GameTable" asp-action="PlayGame">
+    <input type="hidden" asp-for="GameID" value="@uNme"/>
+    <button type="submit"  >Create Game</button>
+</form>
 
 <button>Join a Game</button>

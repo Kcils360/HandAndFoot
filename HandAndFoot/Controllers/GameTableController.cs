@@ -18,6 +18,7 @@ namespace HandAndFoot.Controllers
         {
             _context = context;
         }
+
         public IActionResult Index(string _user)
         {
             int uId = Convert.ToInt32(_user);
@@ -25,36 +26,28 @@ namespace HandAndFoot.Controllers
             TempData["userName"] = user;
             return View();
         }
-        
+
+        //[Route("GameTable/CreateGame")]
         [HttpPost]
-        public IActionResult CreateGame(string _user)
+        public string CreateGame(string _user)
         {
             int uId = Convert.ToInt32(_user);
             string GameID = "";
+            var newGameTable = MakeNewModelGameTable();
             MakeNewGameTable();
-
 
             void MakeNewGameTable()
             {
-                //create a new serializer
-                Serializer ser = new Serializer();
-                //create a new GameTable and gameId
-                var gameTable = new Classes.GameTable();
-                gameTable.GameID = gameTable.MakeNewGameId();
 
-
-                var MgameTable = new Models.GameTable()
-                {
-                    DiscardPile = ser.SerializeDiscard(new DiscardPile(new List<Card>())),
-                    GameDeck = ser.SerializeDeck(new GameDeck()),
-                    GameTableID = gameTable.GameID,
-                    PlayersList = ""
-                };
-                
                 //add the user as Player to gametable
-                var User = _context.Players.Where(p => p.ID == uId).Select(u => u).FirstOrDefault().ToString();
-                MgameTable.PlayersList = User;
+                var User = _context.Players.Where(p => p.ID == uId).Select(u => u).FirstOrDefault();
+                //var uSer = JsonConvert.DeserializeObject<Player>(User);
+                gameTable.Players.Add(User);
+                //serialize gamTable.Players to add to MgameTable
+                var playersList = JsonConvert.SerializeObject(gameTable.Players);
 
+                //add the serialized players list to the Mgametable players list
+                MgameTable.PlayersList = playersList;
 
                 //send the gameTable data to the db
                 _context.GameTables.Add(MgameTable);
@@ -62,8 +55,9 @@ namespace HandAndFoot.Controllers
                 GameID = MgameTable.GameTableID;
             }
 
-            return View("PlayGame");
+            //return View("PlayGame", GameID);
             //return RedirectToAction("PlayGame", new { GameID });
+            return (GameID);
         }
 
         public IActionResult AccessGame(string _user, string _gameID)
@@ -80,13 +74,33 @@ namespace HandAndFoot.Controllers
         //Bring in a gameTable, display GameTable, check for number of players, run game
         public IActionResult PlayGame(string GameID)
         {
-            var Game = _context.GameTables.Where(g => g.GameTableID == GameID).Select(t => t).FirstOrDefault();
+            string uName = _context.Players.Where(u => u.Name == GameID).Select(n => n.ID).FirstOrDefault().ToString();
+            string gID = CreateGame(uName);
+            var Game = _context.GameTables.Where(g => g.GameTableID == gID).Select(t => t).FirstOrDefault();
             //make a new class GameTable
             GameTable gameTable = new GameTable();
             gameTable.GameDeck = JsonConvert.DeserializeObject<GameDeck>(Game.GameDeck);
             gameTable.DiscardPile = JsonConvert.DeserializeObject<DiscardPile>(Game.DiscardPile);
 
             return View("PlayGame");
+        }
+
+        private Models.GameTable MakeNewModelGameTable()
+        {
+            //create a new serializer
+            Serializer ser = new Serializer();
+            //create a new GameTable and gameId
+            var gameTable = new Classes.GameTable();
+            gameTable.GameID = gameTable.MakeNewGameId();
+
+            var MgameTable = new Models.GameTable()
+            {
+                DiscardPile = ser.SerializeDiscard(new DiscardPile(new List<Card>())),
+                GameDeck = ser.SerializeDeck(new GameDeck()),
+                GameTableID = gameTable.GameID,
+                PlayersList = ""
+            };
+            return MgameTable;
         }
     }
 }
